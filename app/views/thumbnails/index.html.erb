@@ -1,0 +1,27 @@
+<h1>Listing thumbnails</h1>
+
+<table>
+  <tr>
+    <th>Video</th>
+    <th>Timecode</th>
+    <th>Thumb</th>
+    <th>Small</th>
+    <th>Full</th>
+  </tr>
+
+<% @thumbnails.each do |thumbnail| %>
+  <tr>
+    <td><%=h thumbnail.video_id %></td>
+    <td><%=h thumbnail.timecode %></td>
+    <td><%= image_tag thumbnail.image.url(:thumb) %></td>
+    <td><%= link_to "View", thumbnail.image.url(:small) %></td>
+    <td><%= link_to "View", thumbnail.image.url %></td>
+    <td><%= link_to 'Show', video_thumbnail_path(thumbnail.video, thumbnail) %></td>
+    <td><%= link_to 'Destroy', video_thumbnail_path(thumbnail.video, thumbnail), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New thumbnail', new_video_thumbnail_path %>

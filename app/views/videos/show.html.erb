@@ -1,0 +1,39 @@
+<p>
+  <b>Name:</b>
+  <%=h @video.name %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%=h @video.width %>
+</p>
+
+<p>
+  <b>Height:</b>
+  <%=h @video.height %>
+</p>
+
+<p>
+  <b>Format:</b>
+  <%=h @video.format %>
+</p>
+
+<p>
+  <b>Parent:</b>
+  <%=h @video.parent_id %>
+</p>
+
+<p>
+  <b>Duration</b>
+  <%= @video.timecode %>
+</p>
+<p><%= link_to "Thumbnails", video_thumbnails_path(@video) %></p>
+<% @video.thumbnails.each do |t| %>
+<div>
+<%= image_tag t.image.url(:thumb) %>
+<%= t.timecode %>
+</div>
+<% end %>
+<%= link_to 'Add Thumbnail', new_video_thumbnail_path(@video) %>
+<%= link_to 'Edit', edit_video_path(@video) %> |
+<%= link_to 'Back', videos_path %>
