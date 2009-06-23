@@ -1,0 +1,30 @@
+<h1>Listing conversions</h1>
+
+<table>
+  <tr>
+    <th>Video</th>
+    <th>Profile</th>
+    <th>Start time</th>
+    <th>End time</th>
+    <th>Status</th>
+    <th>Log</th>
+  </tr>
+
+<% @conversions.each do |conversion| %>
+  <tr>
+    <td><%=h conversion.video_id %></td>
+    <td><%=h conversion.profile_id %></td>
+    <td><%=h conversion.start_time %></td>
+    <td><%=h conversion.end_time %></td>
+    <td><%=h conversion.status %></td>
+    <td><%=h conversion.log %></td>
+    <td><%= link_to 'Show', conversion %></td>
+    <td><%= link_to 'Edit', edit_conversion_path(conversion) %></td>
+    <td><%= link_to 'Destroy', conversion, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New conversion', new_conversion_path %>

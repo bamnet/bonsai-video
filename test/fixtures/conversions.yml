@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  video_id: 1
+  profile_id: 1
+  start_time: 2009-06-22 13:10:16
+  end_time: 2009-06-22 13:10:16
+  status: MyString
+  log: MyText
+
+two:
+  video_id: 1
+  profile_id: 1
+  start_time: 2009-06-22 13:10:16
+  end_time: 2009-06-22 13:10:16
+  status: MyString
+  log: MyText

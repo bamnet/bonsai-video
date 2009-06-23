@@ -1,0 +1,33 @@
+<p>
+  <b>Video:</b>
+  <%=h @conversion.video_id %>
+</p>
+
+<p>
+  <b>Profile:</b>
+  <%=h @conversion.profile_id %>
+</p>
+
+<p>
+  <b>Start time:</b>
+  <%=h @conversion.start_time %>
+</p>
+
+<p>
+  <b>End time:</b>
+  <%=h @conversion.end_time %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @conversion.status %>
+</p>
+
+<p>
+  <b>Log:</b>
+  <%=h @conversion.log %>
+</p>
+
+
+<%= link_to 'Edit', edit_conversion_path(@conversion) %> |
+<%= link_to 'Back', conversions_path %>
