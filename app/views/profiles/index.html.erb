@@ -4,12 +4,14 @@
   <tr>
     <th>Name</th>
     <th>Command</th>
+    <th>Extension</th>
   </tr>
 
 <% @profiles.each do |profile| %>
   <tr>
     <td><%=h profile.name %></td>
     <td><%=h profile.command %></td>
+    <td><%=h profile.extension %></td>
     <td><%= link_to 'Show', profile %></td>
     <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
     <td><%= link_to 'Destroy', profile, :confirm => 'Are you sure?', :method => :delete %></td>

@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :conversions
+
   map.resources :videos, :has_many => :thumbnails
 
   map.resources :profiles

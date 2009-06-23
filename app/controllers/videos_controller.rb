@@ -14,6 +14,8 @@ class VideosController < ApplicationController
   # GET /videos/1.xml
   def show
     @video = Video.find(params[:id])
+    @profiles = Profile.find(:all);
+    @conversion = Conversion.new({:video_id => @video.id})
 
     respond_to do |format|
       format.html # show.html.erb

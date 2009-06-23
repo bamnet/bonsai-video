@@ -7,6 +7,7 @@
     <th>Height</th>
     <th>Format</th>
     <th>Parent</th>
+    <th>Profile</th>
   </tr>
 
 <% @videos.each do |video| %>
@@ -15,7 +16,8 @@
     <td><%=h video.width %></td>
     <td><%=h video.height %></td>
     <td><%=h video.format %></td>
-    <td><%=h video.parent_id %></td>
+    <td><%=h video.parent.name unless video.parent_id.nil? %></td>
+    <td><%=h video.profile.name unless video.profile_id.nil? %></td>
     <td><%= link_to 'Show', video %></td>
     <td><%= link_to 'Edit', edit_video_path(video) %></td>
     <td><%= link_to 'Destroy', video, :confirm => 'Are you sure?', :method => :delete %></td>

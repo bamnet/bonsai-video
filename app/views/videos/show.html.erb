@@ -20,12 +20,21 @@
 
 <p>
   <b>Parent:</b>
-  <%=h @video.parent_id %>
+  <%= link_to @video.parent.name, @video.parent unless @video.parent_id.nil?%>
+</p>
+
+<p>
+  <b>Profile:</b>
+  <%= link_to @video.profile.name, @video.profile unless @video.profile_id.nil?%>
 </p>
 
 <p>
   <b>Duration</b>
   <%= @video.timecode %>
+</p>
+<p>
+  <b>Download</b>
+  <%= link_to "#{@video.asset_file_name}", @video.asset.url %>
 </p>
 <p><%= link_to "Thumbnails", video_thumbnails_path(@video) %></p>
 <% @video.thumbnails.each do |t| %>
@@ -34,6 +43,20 @@
 <%= t.timecode %>
 </div>
 <% end %>
+<p>Children</p>
+<% @video.children.each do |v| %>
+<div>
+<%= link_to v.name, v %>
+</div>
+<% end %>
 <%= link_to 'Add Thumbnail', new_video_thumbnail_path(@video) %>
 <%= link_to 'Edit', edit_video_path(@video) %> |
 <%= link_to 'Back', videos_path %>
+<br />
+<div>
+<% form_for(@conversion) do |c|%>
+<%= c.collection_select :profile_id, @profiles, :id, :name %>
+<%= c.hidden_field(:video_id) %>
+<%= c.submit 'Convert' %>
+<% end %>
+</div>

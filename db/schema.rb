@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090611182931) do
+ActiveRecord::Schema.define(:version => 20090622171016) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -31,11 +31,23 @@ ActiveRecord::Schema.define(:version => 20090611182931) do
     t.datetime "scheduled_at"
   end
 
+  create_table "conversions", :force => true do |t|
+    t.integer  "video_id"
+    t.integer  "profile_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "status"
+    t.text     "log"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "profiles", :force => true do |t|
     t.string   "name"
     t.text     "command"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "extension"
   end
 
   create_table "thumbnails", :force => true do |t|
@@ -73,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20090611182931) do
     t.integer  "audio_bitrate",      :limit => 10, :precision => 10, :scale => 0
     t.integer  "audio_sample_rate"
     t.integer  "audio_resolution"
+    t.integer  "profile_id"
   end
 
 end
