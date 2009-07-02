@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090622171016) do
+ActiveRecord::Schema.define(:version => 20090702150415) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20090622171016) do
     t.binary   "image_file",         :limit => 2147483647
     t.binary   "image_small_file",   :limit => 2147483647
     t.binary   "image_thumb_file",   :limit => 2147483647
+    t.string   "status"
   end
 
   create_table "videos", :force => true do |t|

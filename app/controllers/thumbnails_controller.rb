@@ -45,6 +45,7 @@ class ThumbnailsController < ApplicationController
 
       respond_to do |format|
       if @thumbnail.save
+          MiddleMan.worker(:thumbnail_worker).enq_queue_thumbnail(:args => {:thumbnail_id => @thumbnail.id}, :job_key => @thumbnail.id)
           flash[:notice] = 'Thumbnail was successfully created.'
           format.html { redirect_to(video_thumbnail_path(@thumbnail.video, @thumbnail)) }
           format.xml  { render :xml => @thumbnail, :status => :created, :location => @thumbnail }
