@@ -1,5 +1,6 @@
 class VideoWorker < BackgrounDRb::MetaWorker
   set_worker_name :video_worker
+  pool_size 5
   def create(args = nil)
     logger.info("Creating converter worker.")
   end
@@ -26,6 +27,7 @@ class VideoWorker < BackgrounDRb::MetaWorker
     tempfile = Tempfile.new([File.basename(video.asset_file_name, File.extname(video.asset_file_name)), ".#{profile.extension}"])
     command = profile.command
     command.sub!("outfile", tempfile.path).sub!("infile", video.asset.path)
+    command.sub!(":width", video.width).sub!(":height", video.height)
     conversion.append_to_log command
     logger.info(command)
     conversion.append_to_log "Closing tempfile accessor"
