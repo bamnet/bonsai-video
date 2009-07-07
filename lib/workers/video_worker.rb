@@ -26,8 +26,10 @@ class VideoWorker < BackgrounDRb::MetaWorker
     #Create the temporary file, and prepare the command
     tempfile = Tempfile.new([File.basename(video.asset_file_name, File.extname(video.asset_file_name)), ".#{profile.extension}"])
     command = profile.command
-    command.sub!("outfile", tempfile.path).sub!("infile", video.asset.path)
-    command.sub!(":width", video.width).sub!(":height", video.height)
+    command.sub!(':outfile', tempfile.path)
+    command.sub!(':infile', video.asset.path)
+    command.sub!(':width', video.width.to_s) unless video.width.blank?
+    command.sub!(':height', video.height.to_s)  unless video.height.blank?
     conversion.append_to_log command
     logger.info(command)
     conversion.append_to_log "Closing tempfile accessor"

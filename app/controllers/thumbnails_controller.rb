@@ -6,10 +6,15 @@ class ThumbnailsController < ApplicationController
   # GET /thumbnails.xml
   def index
     @thumbnails = Thumbnail.find(:all, :conditions=>{:video_id => params[:video_id]})
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @thumbnails }
+    @video = Video.find(:first, :conditions=>{:id => params[:video_id]})
+    
+    if request.xhr?
+       render :layout => false, :partial => 'grid', :locals => {:thumbnails => @thumbnails, :video => @video} and return
+    else
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @thumbnails }
+      end
     end
   end
 
@@ -53,7 +58,8 @@ class ThumbnailsController < ApplicationController
           MiddleMan.worker(:thumbnail_worker).enq_queue_thumbnail(:args => {:thumbnail_id => @thumbnail.id}, :job_key => @thumbnail.id)
           if request.xhr?
             @thumbnails = Thumbnail.find(:all, :conditions=>{:video_id => params[:video_id]})
-            render :layout => false, :partial => 'grid', :locals => {:thumbnails => @thumbnails} and return
+            @video = Video.find(:first, :conditions=>{:id => params[:video_id]})
+            render :layout => false, :partial => 'grid', :locals => {:thumbnails => @thumbnails, :video => @video} and return
           end
           flash[:notice] = 'Thumbnail was successfully created.'
           format.html { redirect_to(video_thumbnail_path(@thumbnail.video, @thumbnail)) }

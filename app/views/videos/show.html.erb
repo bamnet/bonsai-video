@@ -8,6 +8,11 @@
   <% unless @video.parent_id.nil? %><div class="span-3 large"><%= link_to "View Parent", @video.parent %></div><% end %>
   <% unless @video.profile_id.nil? %><div class="span-6 large">Converted via <%= link_to @video.profile.name, @video.profile %></div><% end %>
 </div>
+<div class="span-24" style="text-align: right;">
+  <%= link_to 'Edit', edit_video_path(@video) %> |
+  <%= link_to 'Delete', @video, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to 'All Videos', videos_path %>
+</div>
 <h2>Download <%= link_to "#{@video.asset_file_name}", @video.asset.url %> [<%= number_to_human_size(@video.asset_file_size) %>]</h2>
 <div class="span-24 clearfix" id="av">
   <div class="span-11" id="video">
@@ -28,24 +33,37 @@
       <div class="span-5 last"><%= "Resolution " + @video.audio_resolution.to_s unless @video.audio_resolution.blank? %></div> 
     </div>
   </div>
+
 </div>
 
 
 <div class="span-23 last" id="thumbs">
 <h3>Thumbnails</h3>
-<%= render :partial => 'thumbnails/grid', :locals => {:thumbnails => @video.thumbnails} %>
+<%= render :partial => 'thumbnails/grid', :locals => {:thumbnails => @video.thumbnails, :video => @video} %>
 </div>
 
 <div class="span-7 clearfix" id="children">
   <h3>Derivatives</h3>
-  <% @video.children.each do |v| %>
   <ul>
+  <% @video.children.each do |v| %>
     <li>
       <%= link_to v.name, v, :title=>"#{v.hw}/#{v.format}/#{v.video_codec}" %> - <%= v.profile.name %> <br />
       <%= number_to_human_size(v.asset_file_size) %> | <%= v.created_at %>
     </li>
-  </ul>
   <% end %>
+  </ul>
+  <h3>Other Conversions</h3>
+  <ul>
+  <% @video.conversions.each do |c| %>
+    <% if c.status != 'complete' %>
+    <li>
+      <%= link_to c.profile.name, c %> - <%= c.status %> <br />
+      <%= "Started at " + c.start_time.to_s if c.end_time.blank? %>
+      <%= "Ended at " + c.end_time.to_s unless c.end_time.blank? %>
+    </li>
+    <% end %>
+  <% end %>
+  </ul>
   <div>
     <% form_for(@conversion) do |c|%>
       <%= c.collection_select :profile_id, @profiles, :id, :name %>
@@ -56,11 +74,6 @@
 </div>
 <div class="span-16 last" id="playback">
   <h3>Playback</h3>
-  <%= link_to 'Add Thumbnail', new_video_thumbnail_path(@video) %>
-  <%= link_to 'Edit', edit_video_path(@video) %> |
-  <%= link_to 'Back', videos_path %>
-  <br />
-  
   <div>
   <%#= render :partial => "videos/playback/video_for_everyone", :locals => { :video => @video } %>
   </div>

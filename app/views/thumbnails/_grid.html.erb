@@ -1,16 +1,20 @@
 <div id="thumbnail_grid">
-<% thumbnails.each_with_index do |t, i| %>
-<div class="thumbnail span-3 <% if (i > 0 and i.modulo(6) == 0 ) then %>last<% end %>">
-<% if t.status != "complete" %>
-  <%= t.status %>
-<% else %>
-  <%= image_tag t.image.url(:thumb), :alt => t.timecode %>
-<% end %>
-<br /><span class="quiet"><%= t.timecode %></span>
-</div>
-<% end %>
-<div id="new_thumb" class="thumbnail span-3 last">
-<span style="color: green; font-size: xx-large;"><%= link_to_remote "+", :url=> new_video_thumbnail_path(@video),:method => :get, :update => "new_thumb" %></span>
-<br /><span class="quiet">Add More</span>
-</div>
+  <% thumbnails.each_with_index do |t, i| %>
+  <div class="thumbnail span-3 <% if (i > 0 and i.modulo(6) == 0 ) then %>last<% end %>">
+    <% if t.status != "complete" %>
+      <%= t.status %>
+    <% else %>
+      <%= image_tag t.image.url(:thumb), :alt => t.timecode %>
+    <% end %>
+    <br /><span class="quiet"><%= t.timecode %></span>
+  </div>
+  <% end %>
+  <div id="new_thumb" class="thumbnail span-3 last">
+    <span style="color: green; font-size: xx-large;"><%= link_to_remote "+", :url=> new_video_thumbnail_path(@video),:method => :get, :update => "new_thumb" %></span>
+    <br /><span class="quiet">Add More</span>
+  </div>
+  <div class="span-23 last quiet" id="thumb_footer">
+    <%= link_to_remote 'Refresh', :url => {:controller=>"thumbnails", :action=>"index", :video_id =>video.id}, :method => :get, :update => "thumbnail_grid" %>
+    <%= link_to 'Edit', video_thumbnails_path(video) %>
+  </div>
 </div>
