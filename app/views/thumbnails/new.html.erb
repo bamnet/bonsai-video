@@ -4,7 +4,7 @@
   <%= f.error_messages %>
   <p>
     <%= f.label :timecode %><br />
-    <%= f.text_field :timecode %><br />
+    <%= f.text_field :timecode, :class => 'text timecode' %><br />
     [Video duration - <%= @thumbnail.video.timecode %>]
   </p>
   <p>

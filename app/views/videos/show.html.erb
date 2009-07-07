@@ -1,62 +1,67 @@
-<p>
-  <b>Name:</b>
-  <%=h @video.name %>
-</p>
-
-<p>
-  <b>Width:</b>
-  <%=h @video.width %>
-</p>
-
-<p>
-  <b>Height:</b>
-  <%=h @video.height %>
-</p>
-
-<p>
-  <b>Format:</b>
-  <%=h @video.format %>
-</p>
-
-<p>
-  <b>Parent:</b>
-  <%= link_to @video.parent.name, @video.parent unless @video.parent_id.nil?%>
-</p>
-
-<p>
-  <b>Profile:</b>
-  <%= link_to @video.profile.name, @video.profile unless @video.profile_id.nil?%>
-</p>
-
-<p>
-  <b>Duration</b>
-  <%= @video.timecode %>
-</p>
-<p>
-  <b>Download</b>
-  <%= link_to "#{@video.asset_file_name}", @video.asset.url %>
-</p>
-<p><%= link_to "Thumbnails", video_thumbnails_path(@video) %></p>
-<% @video.thumbnails.each do |t| %>
-<div>
-<%= image_tag t.image.url(:thumb) %>
-<%= t.timecode %>
+<div class="span-24">
+  <h1><%=h @video.name %></h1>
 </div>
-<% end %>
-<p>Children</p>
-<% @video.children.each do |v| %>
-<div>
-<%= link_to v.name, v %>
+<div class="span-24" id="details">
+  <div class="push-1 span-3 large">Size: <%= @video.width %>x<%= @video.height %></div>
+  <div class="span-4 large">Duration: <%= @video.timecode %></div>
+  <div class="span-4 large">Format: <%= @video.format %></div>
+  <% unless @video.parent_id.nil? %><div class="span-3 large"><%= link_to "View Parent", @video.parent %></div><% end %>
+  <% unless @video.profile_id.nil? %><div class="span-6 large">Converted via <%= link_to @video.profile.name, @video.profile %></div><% end %>
 </div>
-<% end %>
-<%= link_to 'Add Thumbnail', new_video_thumbnail_path(@video) %>
-<%= link_to 'Edit', edit_video_path(@video) %> |
-<%= link_to 'Back', videos_path %>
-<br />
-<div>
-<% form_for(@conversion) do |c|%>
-<%= c.collection_select :profile_id, @profiles, :id, :name %>
-<%= c.hidden_field(:video_id) %>
-<%= c.submit 'Convert' %>
-<% end %>
+<h2>Download <%= link_to "#{@video.asset_file_name}", @video.asset.url %> [<%= number_to_human_size(@video.asset_file_size) %>]</h2>
+<div class="span-24 clearfix" id="av">
+  <div class="span-11" id="video">
+    <div class="span-11"><h3><%= link_to_function "Video", "$('v_details').toggle();" %></h3></div>
+    <div class="span-11 container" id="v_details" style="display:none;">
+      <div class="span-6">Codec: <%= @video.video_codec %></div>
+      <div class="span-5 last">Bitrate: <%= @video.video_bitrate %></div>
+      <div class="span-6">Frame Rate: <%= @video.video_frame_rate %></div>
+      <div class="span-6 last"><%= "Resolution: " + @video.video_resolution.to_s unless @video.video_resolution.blank? %></div>
+    </div>
+  </div>
+  <div class="span-11 last" id="audio">
+    <div class="span-11"><h3><%= link_to_function "Audio", "$('a_details').toggle();" %></h3></div>
+    <div class="span-11 container" id="a_details" style="display:none;">
+      <div class="span-6">Codec: <%= @video.audio_codec %></div>
+      <div class="span-5 last">Bitrate: <%= @video.audio_bitrate %></div>
+      <div class="span-6">Sample Rate: <%= @video.audio_sample_rate %></div>
+      <div class="span-5 last"><%= "Resolution " + @video.audio_resolution.to_s unless @video.audio_resolution.blank? %></div> 
+    </div>
+  </div>
+</div>
+
+
+<div class="span-23 last" id="thumbs">
+<h3>Thumbnails</h3>
+<%= render :partial => 'thumbnails/grid', :locals => {:thumbnails => @video.thumbnails} %>
+</div>
+
+<div class="span-7 clearfix" id="children">
+  <h3>Derivatives</h3>
+  <% @video.children.each do |v| %>
+  <ul>
+    <li>
+      <%= link_to v.name, v, :title=>"#{v.hw}/#{v.format}/#{v.video_codec}" %> - <%= v.profile.name %> <br />
+      <%= number_to_human_size(v.asset_file_size) %> | <%= v.created_at %>
+    </li>
+  </ul>
+  <% end %>
+  <div>
+    <% form_for(@conversion) do |c|%>
+      <%= c.collection_select :profile_id, @profiles, :id, :name %>
+      <%= c.hidden_field(:video_id) %>
+      <%= c.submit 'Convert' %>
+    <% end %>
+  </div>
+</div>
+<div class="span-16 last" id="playback">
+  <h3>Playback</h3>
+  <%= link_to 'Add Thumbnail', new_video_thumbnail_path(@video) %>
+  <%= link_to 'Edit', edit_video_path(@video) %> |
+  <%= link_to 'Back', videos_path %>
+  <br />
+  
+  <div>
+  <%#= render :partial => "videos/playback/video_for_everyone", :locals => { :video => @video } %>
+  </div>
 </div>

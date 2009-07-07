@@ -31,9 +31,13 @@ class ThumbnailsController < ApplicationController
     @thumbnail.time = 0
     @thumbnail.video_id = params[:video_id]
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @thumbnail }
+    if request.xhr?
+       render :layout => false,  :action => 'xhr_new'
+    else
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @thumbnail }
+      end
     end
   end
 
@@ -42,10 +46,15 @@ class ThumbnailsController < ApplicationController
   def create
     @thumbnail = Thumbnail.new(params[:thumbnail])
     @thumbnail.video_id = params[:video_id]
+    @thumbnail.status = "Requested" if(@thumbnail.status.blank?)
 
       respond_to do |format|
       if @thumbnail.save
           MiddleMan.worker(:thumbnail_worker).enq_queue_thumbnail(:args => {:thumbnail_id => @thumbnail.id}, :job_key => @thumbnail.id)
+          if request.xhr?
+            @thumbnails = Thumbnail.find(:all, :conditions=>{:video_id => params[:video_id]})
+            render :layout => false, :partial => 'grid', :locals => {:thumbnails => @thumbnails} and return
+          end
           flash[:notice] = 'Thumbnail was successfully created.'
           format.html { redirect_to(video_thumbnail_path(@thumbnail.video, @thumbnail)) }
           format.xml  { render :xml => @thumbnail, :status => :created, :location => @thumbnail }

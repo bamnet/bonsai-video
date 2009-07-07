@@ -1,0 +1,8 @@
+<% remote_form_for([ @thumbnail.video, @thumbnail ], :update=>'thumbnail_grid') do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :timecode %>:
+    <%= f.text_field :timecode, :class => 'text timecode' %> <br />
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

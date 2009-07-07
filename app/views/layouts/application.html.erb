@@ -4,11 +4,20 @@
     <%= stylesheet_link_tag "blueprint/screen" %>
     <%= stylesheet_link_tag "blueprint/print", :media => "print" %>
     <%= stylesheet_link_tag "blueprint/plugins/buttons/screen" %>
+    <%= stylesheet_link_tag "main" %>
     <!--[if lt IE 8]><%= stylesheet_link_tag "blueprint/ie", :media => "screen, projection" %><![endif]-->
     <title>Bonsai Video</title>
   </head>
   <body>
-    <div class="container showgrid">
-      <%= yield :layout %>
+    <div class="container showgrid" id="header">
+      <div class="span-24">
+          
+      </div>
+      <div class="span-24" id="main">
+          <%= yield :layout %>
+      </div>
+      <div class="span-24" id="footer">
+          
+      </div>
     </div>
 </html>

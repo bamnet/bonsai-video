@@ -1,0 +1,29 @@
+#av {
+  margin-bottom: 10px;
+}
+#av #video {
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+	background-color: #78D8F0;
+	padding: 10px;
+}
+
+#av #audio {
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+	background-color: #9EE682;
+	padding: 10px;
+}
+#thumbs{
+	margin-bottom: 10px;
+	padding-top: 6px;
+	background-color: #82C1E6
+}
+.thumbnail{
+	text-align: center;
+}
+input.timecode {
+	width: 75px;
+}
