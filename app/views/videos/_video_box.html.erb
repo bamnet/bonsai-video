@@ -1,0 +1,11 @@
+<div class="span-24 video_box">
+  <h2><%= link_to video.name, video %></h2>
+  <div class="span-24 last" id="details">
+    <div class="push-1 span-3 large">Size: <%= video.hw %></div>
+    <div class="span-4 large">Duration: <%= video.timecode %></div>
+    <div class="span-4 large">Format: <%= video.format %></div>
+    <% if video.children.count > 0 %>
+      <div class="span-2 large"><%= video.children.count %> related</div>
+    <% end %>
+  </div>
+</div>

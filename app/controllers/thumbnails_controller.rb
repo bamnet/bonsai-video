@@ -9,7 +9,7 @@ class ThumbnailsController < ApplicationController
     @video = Video.find(:first, :conditions=>{:id => params[:video_id]})
     
     if request.xhr?
-       render :layout => false, :partial => 'grid', :locals => {:thumbnails => @thumbnails, :video => @video} and return
+       render :layout => false, :partial => 'grid', :locals => {:thumbnails => @thumbnails, :video => @video, :controls => true} and return
     else
       respond_to do |format|
         format.html # index.html.erb
@@ -59,7 +59,7 @@ class ThumbnailsController < ApplicationController
           if request.xhr?
             @thumbnails = Thumbnail.find(:all, :conditions=>{:video_id => params[:video_id]})
             @video = Video.find(:first, :conditions=>{:id => params[:video_id]})
-            render :layout => false, :partial => 'grid', :locals => {:thumbnails => @thumbnails, :video => @video} and return
+            render :layout => false, :partial => 'grid', :locals => {:thumbnails => @thumbnails, :video => @video, :controls=> true} and return
           end
           flash[:notice] = 'Thumbnail was successfully created.'
           format.html { redirect_to(video_thumbnail_path(@thumbnail.video, @thumbnail)) }

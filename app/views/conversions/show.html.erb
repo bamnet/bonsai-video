@@ -1,11 +1,11 @@
 <p>
   <b>Video:</b>
-  <%=h @conversion.video_id %>
+  <%= link_to @conversion.video.name, @conversion.video %>
 </p>
 
 <p>
   <b>Profile:</b>
-  <%=h @conversion.profile_id %>
+  <%= link_to @conversion.profile.name, @conversion.profile %>
 </p>
 
 <p>

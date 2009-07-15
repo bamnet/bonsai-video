@@ -41,4 +41,20 @@ class Video < ActiveRecord::Base
       end
     end
   end
+  
+  def hw
+    return "#{self.width}x#{self.height}"
+  end
+  
+  def best_mp4
+      return Video.find(:first, 
+                      :conditions => ['(id = :id OR parent_id = :id) AND format = "MPEG-4" AND video_codec = "AVC" ',{ :id => self.id} ], 
+                      :order => 'width DESC, height DESC, video_bitrate DESC, video_frame_rate DESC, audio_sample_rate DESC')
+  end
+  
+  def best_ogg
+    return Video.find(:first, 
+                      :conditions => ['(id = :id OR parent_id = :id) AND format = "OGG" AND video_codec = "Theora" ',{ :id => self.id} ], 
+                      :order => 'width DESC, height DESC, video_bitrate DESC, video_frame_rate DESC, audio_sample_rate DESC')
+  end
 end

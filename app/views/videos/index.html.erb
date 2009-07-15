@@ -1,30 +1,14 @@
-<h1>Listing videos</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Width</th>
-    <th>Height</th>
-    <th>Format</th>
-    <th>Parent</th>
-    <th>Profile</th>
-  </tr>
+<h1>Videos</h1>
+<%= link_to 'New video', new_video_path %>
 
 <% @videos.each do |video| %>
-  <tr>
-    <td><%=h video.name %></td>
-    <td><%=h video.width %></td>
-    <td><%=h video.height %></td>
-    <td><%=h video.format %></td>
-    <td><%=h video.parent.name unless video.parent_id.nil? %></td>
-    <td><%=h video.profile.name unless video.profile_id.nil? %></td>
-    <td><%= link_to 'Show', video %></td>
-    <td><%= link_to 'Edit', edit_video_path(video) %></td>
-    <td><%= link_to 'Destroy', video, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <div class="video_index span-24">
+    <%= render :partial=> 'video_box', :locals => {:video => video} %>
+    <div class="span-23 last push-1">
+      <h3><%= link_to_function "Thumbnails", "$('thumbnails_" + video.id.to_s + "').toggle();" %></h3>
+      <div id="thumbnails_<%= video.id %>" style="display:none;">
+        <%= render :partial => 'thumbnails/grid', :locals => {:thumbnails => video.thumbnails, :video => video, :controls => false} %>
+      </div>
+    </div>
+  </div>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New video', new_video_path %>

@@ -9,6 +9,7 @@
     <br /><span class="quiet"><%= t.timecode %></span>
   </div>
   <% end %>
+  <% if controls != false %>
   <div id="new_thumb" class="thumbnail span-3 last">
     <span style="color: green; font-size: xx-large;"><%= link_to_remote "+", :url=> new_video_thumbnail_path(@video),:method => :get, :update => "new_thumb" %></span>
     <br /><span class="quiet">Add More</span>
@@ -17,4 +18,5 @@
     <%= link_to_remote 'Refresh', :url => {:controller=>"thumbnails", :action=>"index", :video_id =>video.id}, :method => :get, :update => "thumbnail_grid" %>
     <%= link_to 'Edit', video_thumbnails_path(video) %>
   </div>
+  <% end %>
 </div>
