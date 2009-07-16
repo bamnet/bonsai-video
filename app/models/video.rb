@@ -37,7 +37,7 @@ class Video < ActiveRecord::Base
   def after_save
     if !self.no_thumbs && self.thumbnails.empty? && !self.duration.blank?
       [0, self.duration/2, self.duration-1].each do |time|
-        self.thumbnails.create(:video_id => id, :time => time)
+        self.thumbnails.create(:video_id => id, :time => time ,:status => "Requested")
       end
     end
   end
@@ -46,15 +46,18 @@ class Video < ActiveRecord::Base
     return "#{self.width}x#{self.height}"
   end
   
-  def best_mp4
+  def best(video_format = nil, video_codec = nil)
+      conditions = Array.new
+      conditions << '(id = :id OR parent_id = :id)'
+      if(!video_codec.blank?)
+        conditions << 'video_codec = :video_codec'
+      end
+      if(!video_format.blank?)
+        conditions << 'format = :video_format'
+      end
       return Video.find(:first, 
-                      :conditions => ['(id = :id OR parent_id = :id) AND format = "MPEG-4" AND video_codec = "AVC" ',{ :id => self.id} ], 
-                      :order => 'width DESC, height DESC, video_bitrate DESC, video_frame_rate DESC, audio_sample_rate DESC')
-  end
-  
-  def best_ogg
-    return Video.find(:first, 
-                      :conditions => ['(id = :id OR parent_id = :id) AND format = "OGG" AND video_codec = "Theora" ',{ :id => self.id} ], 
+                      :conditions => [conditions.join(' AND '),
+                                      { :id => self.id, :video_format => video_format, :video_codec => video_codec} ], 
                       :order => 'width DESC, height DESC, video_bitrate DESC, video_frame_rate DESC, audio_sample_rate DESC')
   end
 end

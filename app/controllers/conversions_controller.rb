@@ -21,17 +21,6 @@ class ConversionsController < ApplicationController
     end
   end
 
-  # GET /conversions/new
-  # GET /conversions/new.xml
-  def new
-    @conversion = Conversion.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @conversion }
-    end
-  end
-
   # GET /conversions/1/edit
   def edit
     @conversion = Conversion.find(params[:id])

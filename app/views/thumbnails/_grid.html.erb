@@ -1,13 +1,15 @@
 <div id="thumbnail_grid">
   <% thumbnails.each_with_index do |t, i| %>
-  <div class="thumbnail span-3 <% if (i > 0 and i.modulo(6) == 0 ) then %>last<% end %>">
-    <% if t.status != "complete" %>
-      <%= t.status %>
-    <% else %>
-      <%= image_tag t.image.url(:thumb), :alt => t.timecode %>
+    <% if !t.status.blank? %>
+    <div class="thumbnail span-3 <% if (i > 0 and i.modulo(6) == 0 ) then %>last<% end %>">
+      <% if t.status == "complete" %>
+        <%= image_tag t.image.url(:thumb), :alt => t.timecode %>
+      <% else %>
+        <%= t.status %>
+      <% end %>
+      <br /><span class="quiet"><%= t.timecode %></span>
+    </div>
     <% end %>
-    <br /><span class="quiet"><%= t.timecode %></span>
-  </div>
   <% end %>
   <% if controls != false %>
   <div id="new_thumb" class="thumbnail span-3 last">

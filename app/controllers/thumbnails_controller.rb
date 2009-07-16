@@ -18,17 +18,6 @@ class ThumbnailsController < ApplicationController
     end
   end
 
-  # GET /thumbnails/1
-  # GET /thumbnails/1.xml
-  def show
-    @thumbnail = Thumbnail.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @thumbnail }
-    end
-  end
-
   # GET /thumbnails/new
   # GET /thumbnails/new.xml
   def new

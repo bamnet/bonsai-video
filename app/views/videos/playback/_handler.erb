@@ -1,0 +1,18 @@
+<%  best_ogg = @video.best('OGG', 'Theora') %>
+<%  best_mp4 = @video.best('MPEG-4', 'AVC') %>
+<%  if(!best_ogg.blank? && !best_mp4.blank?) %>
+    <%= render :partial => 'videos/playback/video_for_everyone', 
+                :locals => {:best_mp4 => best_mp4, :best_ogg => best_ogg, :video => @video} %>
+<% else %>
+  <% best_flv = @video.best('Flash Video', 'H.263') %>
+  <% best_mov = @video.best('QuickTime') %>
+    <% if !best_flv.blank? %>
+      <%= render :partial => 'videos/playback/flowplayer', :locals => {:video => best_flv} %>
+    <% elsif !best_ogg.blank? %>
+      <%= render :partial => 'videos/playback/video_ogg', :locals => {:video => best_ogg} %>
+    <% elsif !best_mp4.blank? %>
+      <%= render :partial => 'videos/playback/flowplayer', :locals => {:video => best_mp4} %>
+    <% elsif !best_mov.blank? %>
+      <%= render :partial => 'videos/playback/quicktime', :locals => {:video => best_mov} %>
+    <% end %>
+<% end %>
