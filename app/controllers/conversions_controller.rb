@@ -34,7 +34,7 @@ class ConversionsController < ApplicationController
 
     respond_to do |format|
       if @conversion.save
-        MiddleMan.worker(:video_worker).enq_queue_convert(:args => {:conversion_id => @conversion.id}, :job_key => @conversion.id)
+        VideoWorker.asynch_convert(:conversion_id => @conversion.id)
         flash[:notice] = 'Conversion was successfully created.'
         format.html { redirect_to(@conversion) }
         format.xml  { render :xml => @conversion, :status => :created, :location => @conversion }

@@ -45,3 +45,5 @@ Rails::Initializer.run do |config|
   
   config.action_controller.relative_url_root = "/bonsai"
 end
+
+Workling::Remote.dispatcher = Workling::Remote::Runners::StarlingRunner.new
