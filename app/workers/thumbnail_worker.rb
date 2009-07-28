@@ -13,11 +13,29 @@ class ThumbnailWorker < Workling::Base
     logger.info(command)
     system command
     if tempfile.size > 0
-      thumbnail.image = tempfile
-      thumbnail.status = "complete"
-      thumbnail.save
+      if !black(:path => tempfile.path) || args[:allow_black]
+        thumbnail.image = tempfile
+        thumbnail.status = "complete"
+        thumbnail.save
+      else
+        thumbnail.update_attributes({:status => "black"})
+        thumbnail.destroy
+        return false
+      end
     else
       thumbnail.update_attributes({:status => "failed"})
+      return false
+    end
+  end
+  
+  def black(args = nil)
+    require 'RMagick'
+    src_black = Magick::ImageList.new(RAILS_ROOT+'/public/images/black.jpg')
+    source = Magick::ImageList.new(args[:path])
+    black = src_black.scale(source.columns, source.rows)
+    if source.difference(black)[1] < 0.01
+      return true
+    else
       return false
     end
   end

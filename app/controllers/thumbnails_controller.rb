@@ -5,7 +5,7 @@ class ThumbnailsController < ApplicationController
   # GET /thumbnails
   # GET /thumbnails.xml
   def index
-    @thumbnails = Thumbnail.find(:all, :conditions=>{:video_id => params[:video_id]})
+    @thumbnails = Thumbnail.find(:all, :conditions=>{:video_id => params[:video_id]}, :order=>:time)
     @video = Video.find(:first, :conditions=>{:id => params[:video_id]})
     
     if request.xhr?
@@ -35,14 +35,12 @@ class ThumbnailsController < ApplicationController
     end
   end
 
-  # POST /thumbnails
-  # POST /thumbnails.xml
   def create
     @thumbnail = Thumbnail.new(params[:thumbnail])
     @thumbnail.video_id = params[:video_id]
     @thumbnail.status = "Requested" if(@thumbnail.status.blank?)
-
-      respond_to do |format|
+    
+          respond_to do |format|
       if @thumbnail.save
           ThumbnailWorker.asynch_generate(:thumbnail_id => @thumbnail.id)
           if request.xhr?

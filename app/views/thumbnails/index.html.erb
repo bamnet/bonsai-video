@@ -15,7 +15,7 @@
     <td><%=h thumbnail.video_id %></td>
     <td><%=h thumbnail.timecode %></td>
     <td><%=h thumbnail.status %></td>
-    <td><%= image_tag thumbnail.image.url(:thumb) %></td>
+    <td><%= image_tag thumbnail.image.url(:thumb) unless thumbnail.status != 'complete'%></td>
     <td><%= link_to "View", thumbnail.image.url(:small) %></td>
     <td><%= link_to "View", thumbnail.image.url %></td>
     <td><%= link_to 'Destroy', video_thumbnail_path(thumbnail.video, thumbnail), :confirm => 'Are you sure?', :method => :delete %></td>
