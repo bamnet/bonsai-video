@@ -79,7 +79,7 @@
   </div>
   <h3>Embed</h3>
   <div>
-  <% remote_form_for :video, @video, :url => { :action => "embed" }, :update => "embed_code"  do |f| %>
+  <% remote_form_for :video, @video, :url => { :action => "embed" }, :success=>"$('embed_code').value = request.responseText;"  do |f| %>
       <%= select_tag "player", options_for_select(@players) %>
       <%= submit_tag 'View' %>
   <% end %>
