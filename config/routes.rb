@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :conversions
 
-  map.resources :videos, :has_many => :thumbnails
+  map.resources :videos, :has_many => :thumbnails, :member => { :embed => [:get, :post] }
 
   map.resources :profiles
 

@@ -72,9 +72,17 @@
     <% end %>
   </div>
 </div>
-<div class="span-16 last" id="playback">
+<div class="span-16 last">
   <h3>Playback</h3>
+  <div id="playback">
+    <%= render :partial => "videos/playback/handler", :locals => { :video => @video } %>
+  </div>
+  <h3>Embed</h3>
   <div>
-  <%= render :partial => "videos/playback/handler", :locals => { :video => @video } %>
+  <% remote_form_for :video, @video, :url => { :action => "embed" }, :update => "embed_code"  do |f| %>
+      <%= select_tag "player", options_for_select(@players) %>
+      <%= submit_tag 'View' %>
+  <% end %>
+  <textarea id="embed_code" style="width: 100%"></textarea>
   </div>
 </div>

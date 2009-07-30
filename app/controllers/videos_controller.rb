@@ -16,6 +16,11 @@ class VideosController < ApplicationController
     @video = Video.find(params[:id])
     @profiles = Profile.find(:all);
     @conversion = Conversion.new({:video_id => @video.id})
+    
+    #All conversion options
+    path = "app/views/videos/playback"
+    @players = Dir.glob("#{path}/**")
+    @players.map! {|f| File.basename(f, File.extname(f)).reverse.chop.reverse}
 
     respond_to do |format|
       format.html # show.html.erb
@@ -86,6 +91,27 @@ class VideosController < ApplicationController
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @video.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  # GET /videos/1/embed
+  def embed
+    @video = Video.find(params[:id])
+    if params[:player].nil?
+      render :partial => 'videos/playback/handler', :locals => {:video => @video}
+    else
+      player ='videos/playback/' + params[:player].gsub( /\W/, '')
+      if player == 'videos/playback/video_for_everyone'
+        best_ogg = @video.best('OGG', 'Theora')
+        best_mp4 = @video.best('MPEG-4', 'AVC')
+        if !best_ogg.blank? && !best_mp4.blank?
+          render :partial => player, :locals => {:best_mp4 => best_mp4, :best_ogg => best_ogg, :video => @video}
+        else
+          render :text => "Unavailable for this video.  Ensure mp4 and ogg conversions exist."
+        end
+      else
+        render :partial => player, :locals => {:video => @video}
       end
     end
   end

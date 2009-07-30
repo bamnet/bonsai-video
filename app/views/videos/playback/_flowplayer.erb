@@ -1,5 +1,5 @@
-<object id="flowplayer" width="<%= video.width %>" height="<%= video.height %>" data="/bonsai/players/flowplayer/flowplayer-3.1.1.swf"  type="application/x-shockwave-flash">
-    <param name="movie" value="/bonsai/players/flowplayer/flowplayer-3.1.1.swf" /> 
+<object id="flowplayer" width="<%= video.width %>" height="<%= video.height %>" data="<%= path_to_url "/bonsai/players/flowplayer/flowplayer-3.1.1.swf" %>"  type="application/x-shockwave-flash">
+    <param name="movie" value="<%= path_to_url "/bonsai/players/flowplayer/flowplayer-3.1.1.swf" %>" /> 
     <param name="allowfullscreen" value="true" />
-    <param name="flashvars" value='config={"clip":"<%= video.asset.url %>"}' />
+    <param name="flashvars" value="config={'clip':'<%= path_to_url video.asset.url %>'}" />
 </object>

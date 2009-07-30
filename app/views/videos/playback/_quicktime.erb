@@ -1,5 +1,5 @@
 <object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" codebase="http://www.apple.com/qtactivex/qtplugin.cab" height="<%= video.height + 16 %>" width="<%= video.width %>">
-  <param name="src" value="<%= video.asset.url %>">
+  <param name="src" value="<%= path_to_url video.asset.url %>">
   <param name="type" value="video/quicktime" height="<%= video.height + 16 %>" width="<%= video.width %>">
-  <embed src="<%= video.asset.url %>" height="<%= video.height + 16 %>" width="<%= video.width%>" autoplay="true" type="video/quicktime" pluginspage="http://www.apple.com/quicktime/download/">
+  <embed src="<%= path_to_url video.asset.url %>" height="<%= video.height + 16 %>" width="<%= video.width%>" autoplay="true" type="video/quicktime" pluginspage="http://www.apple.com/quicktime/download/">
 </object>

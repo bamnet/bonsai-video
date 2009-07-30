@@ -1,23 +1,23 @@
-<!-- ÒVideo for EverybodyÓ by Kroc Camen <camendesign.com> cc-by -->
+<!-- Video for Everybody by Kroc Camen <camendesign.com> cc-by -->
 <video width="<%= best_mp4.width %>" height="<%= best_mp4.height %>" controls="controls">
-  <source src="<%= best_mp4.asset.url %>" type="video/mp4" />
-  <source src="<%= best_ogg.asset.url %>" type="video/ogg" />
-   <object id="flowplayer" width="<%= best_mp4.width %>" height="<%= best_mp4.height %>" data="/bonsai/players/flowplayer/flowplayer-3.1.1.swf"  type="application/x-shockwave-flash">
-    <param name="movie" value="/bonsai/players/flowplayer/flowplayer-3.1.1.swf" /> 
+  <source src="<%= path_to_url(best_mp4.asset.url) %>" type="video/mp4" />
+  <source src="<%= path_to_url(best_ogg.asset.url) %>" type="video/ogg" />
+   <object id="flowplayer" width="<%= best_mp4.width %>" height="<%= best_mp4.height %>" data="<%= path_to_url "/bonsai/players/flowplayer/flowplayer-3.1.1.swf" %>"  type="application/x-shockwave-flash">
+    <param name="movie" value="<%= path_to_url "/bonsai/players/flowplayer/flowplayer-3.1.1.swf" %>" /> 
     <param name="allowfullscreen" value="true" />
-    <param name="flashvars" value='config={"clip":"<%= best_mp4.asset.url %>"}' />
+    <param name="flashvars" value="config={'clip':'<%= path_to_url video.asset.url %>'}" />
     <!--[if gt IE 6]>
       <object width="<%= best_mp4.width %>" height="<%= best_mp4.height %>" classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B">
-        <param name="src" value="<%= best_mp4.asset.url %>" />
+        <param name="src" value="<%= path_to_url best_mp4.asset.url %>" />
     <! [endif]-->
     <!--[if gt IE 6]><!-->
-    <object width="<%= best_mp4.width %>" height="<%= best_mp4.height %>" type="video/quicktime" data="<%= best_mp4.asset.url %>">
-      <param name="src" value="<%= best_mp4.asset.url %>" />
+    <object width="<%= best_mp4.width %>" height="<%= best_mp4.height %>" type="video/quicktime" data="<%= path_to_url best_mp4.asset.url %>">
+      <param name="src" value="<%= path_to_url best_mp4.asset.url %>" />
       <!--<![endif]--> 
       <p>
         <strong>No video playback capabilities detected.</strong>
         Why not try to download the file instead?<br />
-        <a href="<%= video.asset.url %>"><%= video.name %></a>
+        <a href="<%= path_to_url video.asset.url %>"><%= video.name %></a>
       </p>
       <!--[if gt IE 6]><!-->
     </object><!--<![endif]-->
