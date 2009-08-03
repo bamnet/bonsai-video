@@ -25,6 +25,12 @@ class ConversionsController < ApplicationController
   def edit
     @conversion = Conversion.find(params[:id])
   end
+  
+  def resubmit
+    @conversion = Conversion.find(params[:id])
+    VideoWorker.asynch_convert(:conversion_id => @conversion.id)
+    redirect_to(@conversion)
+  end
 
   # POST /conversions
   # POST /conversions.xml

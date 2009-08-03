@@ -11,7 +11,11 @@ class VideoWorker < Workling::Base
     conversion.update_attributes({:status => "active", :start_time => Time.now})
     
     #Create the temporary file, and prepare the command
-    tempfile = Tempfile.new([File.basename(video.asset_file_name, File.extname(video.asset_file_name)), ".#{profile.extension}"])
+    if profile.extension.blank?
+      tempfile = Tempfile.new([File.basename(video.asset_file_name, File.extname(video.asset_file_name)), "#{File.extname(video.asset_file_name)}"])
+    else
+      tempfile = Tempfile.new([File.basename(video.asset_file_name, File.extname(video.asset_file_name)), ".#{profile.extension}"])
+    end
     command = profile.command
     command.sub!(':outfile', tempfile.path)
     command.sub!(':infile', video.asset.path)

@@ -1,0 +1,9 @@
+<embed type="application/x-vlc-plugin"
+         name="video_<%= video.id %>"
+         autoplay="no" loop="no" width="<%= video.width %>" height="<%= video.height %>"
+         target="<%= path_to_url video.asset.url %>" />
+<br />
+  <a href="javascript:;" onclick='document.video_<%= video.id %>.play()'>Play</a>
+  <a href="javascript:;" onclick='document.video_<%= video.id %>.pause()'>Pause</a>
+  <a href="javascript:;" onclick='document.video_<%= video.id %>.stop()'>Stop</a>
+  <a href="javascript:;" onclick='document.video_<%= video.id %>.fullscreen()'>Fullscreen</a>
