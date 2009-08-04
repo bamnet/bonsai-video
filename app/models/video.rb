@@ -15,7 +15,9 @@ class Video < ActiveRecord::Base
   acts_as_tree
   acts_as_timecode :column => :duration
   
-  has_attached_file :asset, :url => "/bonsai/system/:attachment/:id/:style/:basename.:extension"
+  has_attached_file :asset, 
+                    :url => "/bonsai/videos/dl/:id/:basename.:extension",
+                    :path => ":rails_root/files/:attachment/:id/:style/:basename.:extension"
     
   def populate_meta_data(path = nil)
     path = self.asset.path unless path

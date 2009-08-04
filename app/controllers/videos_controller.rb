@@ -115,6 +115,18 @@ class VideosController < ApplicationController
       end
     end
   end
+  
+  # GET /videos/dl/1/Sample.avi
+  def dl
+      video = Video.find(params[:id])
+      #Adjust mime types to please browsers
+      if video.asset_content_type == 'application/x-ogv'
+        content_type = 'video/ogg'
+      else
+        content_type = video.asset_content_type
+      end
+      send_file video.asset.path, :type => content_type
+  end
 
   # DELETE /videos/1
   # DELETE /videos/1.xml

@@ -5,4 +5,5 @@ tmp/**/*
 db/*.sqlite3
 doc/app/*
 public/system/**/*
+files/**/*
 import/*
