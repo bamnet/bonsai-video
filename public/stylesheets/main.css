@@ -36,3 +36,20 @@ input.timecode {
 #playback {
 	margin-bottom: 10px;
 }
+#header{
+	background-image: url(../images/bonsai_logo_small.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+}
+.header_item{
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: large;
+	background-color: #D9E2E0;
+	text-align: center;
+}
+.header_item a{
+	color: #852d0d;
+}
