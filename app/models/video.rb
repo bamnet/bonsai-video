@@ -18,7 +18,7 @@ class Video < ActiveRecord::Base
   has_attached_file :asset, 
                     :url => "/bonsai/videos/dl/:id/:basename.:extension",
                     :path => ":rails_root/files/:attachment/:id/:style/:basename.:extension"
-    
+  
   def populate_meta_data(path = nil)
     path = self.asset.path unless path
     details = Mediainfo.new path
@@ -61,5 +61,9 @@ class Video < ActiveRecord::Base
                       :conditions => [conditions.join(' AND '),
                                       { :id => self.id, :video_format => video_format, :video_codec => video_codec} ], 
                       :order => 'width DESC, height DESC, video_bitrate DESC, video_frame_rate DESC, audio_sample_rate DESC')
+  end
+  
+  def aggregate_view_count
+    return Video.sum(:view_count, :conditions => ['id = :id OR parent_id = :id', { :id => self.id}])
   end
 end

@@ -125,6 +125,8 @@ class VideosController < ApplicationController
       else
         content_type = video.asset_content_type
       end
+      #Increment the file counter
+      Video.increment_counter(:view_count, video.id)
       send_file video.asset.path, :type => content_type
   end
 

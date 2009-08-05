@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090702150415) do
+ActiveRecord::Schema.define(:version => 20090805140014) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.text     "args"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20090702150415) do
     t.integer  "audio_sample_rate"
     t.integer  "audio_resolution"
     t.integer  "profile_id"
+    t.integer  "view_count",                                                      :default => 0, :null => false
   end
 
 end
