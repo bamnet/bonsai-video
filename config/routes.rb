@@ -5,10 +5,12 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :profiles
   
+  
   map.root :controller => "videos"
 
   #Exposes the video download interface 
   map.connect ':controller/:action/:id/:filename.:format'
+  map.connect ':controller/:action.:format'
   
   #Regular routes
   map.connect ':controller/:action/:id'

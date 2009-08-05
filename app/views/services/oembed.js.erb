@@ -1,0 +1,15 @@
+<% data = {:type => 'video',
+           :version => 1.0,
+           :provider_name => 'Bonsai Video',
+           :provider_url => url_for(:controller => 'videos', :action => 'index', :only_path => false),
+           :title => @video.name,
+           :html => (render :partial => 'videos/playback/handler', :locals => {:video => @video}),
+           :width => @video.width,
+           :height => @video.height,
+           :duration => @video.duration,
+           :thumbnail_url => path_to_url(@thumbnail.image.url(:thumb)),
+           :thumbnail_width => @thumb_size[:width],
+           :thumbnail_height => @thumb_size[:height],
+           :video_id => @video.id
+           }
+<%= "#{params[:callback]}(" if params[:callback]%><%= data.to_json %><%= ")" if params[:callback] %>
