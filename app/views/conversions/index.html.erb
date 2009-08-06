@@ -1,4 +1,4 @@
-<h1>Listing conversions</h1>
+<h1>Conversion Log</h1>
 
 <table>
   <tr>
@@ -7,24 +7,17 @@
     <th>Start time</th>
     <th>End time</th>
     <th>Status</th>
-    <th>Log</th>
   </tr>
 
 <% @conversions.each do |conversion| %>
   <tr>
-    <td><%=h conversion.video_id %></td>
-    <td><%=h conversion.profile_id %></td>
+    <td><%= conversion.video.nil? ? 'Unknown' : link_to(conversion.video.name, conversion.video) %></td>
+    <td><%= conversion.profile.nil? ? 'Unknown' : link_to(conversion.profile.name, conversion.profile) %></td>
     <td><%=h conversion.start_time %></td>
     <td><%=h conversion.end_time %></td>
     <td><%=h conversion.status %></td>
-    <td><%=h conversion.log %></td>
     <td><%= link_to 'Show', conversion %></td>
-    <td><%= link_to 'Edit', edit_conversion_path(conversion) %></td>
-    <td><%= link_to 'Destroy', conversion, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Delete Log', conversion, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New conversion', new_conversion_path %>
